@@ -24,15 +24,12 @@ function App() {
   };
 
   const minutes = Math.floor(seconds / 60);
-  const secs = seconds % 60;
+  const secs = String(seconds % 60).padStart(2, '0'); 
 
   return (
     <div className="App" style={{ textAlign: 'center', marginTop: '50px' }}>
       <h1>Stopwatch</h1>
-      <p>
-        Time: {minutes.toString().padStart(2, '0')}:
-        {secs.toString().padStart(2, '0')}
-      </p>
+      <p style={{ fontSize: '2rem' }}>{minutes}:{secs}</p>
       <button onClick={handleStartStop}>{isRunning ? 'Stop' : 'Start'}</button>
       <button onClick={handleReset} style={{ marginLeft: '10px' }}>Reset</button>
     </div>
