@@ -1,38 +1,40 @@
 import { useState, useRef } from 'react';
 
 function App() {
-  const [seconds,setSeconds] = useState(0);
-  const [button,setButton] =  useState('Start');
-  const time = useRef(0);
-  const intervalTime = useRef();
+  const [seconds, setSeconds] = useState(0);
+  const [isRunning, setIsRunning] = useState(false);
+  const intervalRef = useRef(null);
 
-  const handleStartStop = async (e) => {
-    if(e.target.value === 'Start'){
-      setButton('Stop');
-      intervalTime.current = setInterval(() => {
-        time.current += 1;
-        setSeconds(time.current);
-      }, 1000)
-    }else{
-      setButton('Start');
-      clearInterval(intervalTime.current);
+  const handleStartStop = () => {
+    if (isRunning) {
+      clearInterval(intervalRef.current);
+      setIsRunning(false);
+    } else {
+      intervalRef.current = setInterval(() => {
+        setSeconds(prev => prev + 1);
+      }, 1000);
+      setIsRunning(true);
     }
-  }
+  };
 
   const handleReset = () => {
-    clearInterval(intervalTime.current);
-    time.current = 0;
+    clearInterval(intervalRef.current);
     setSeconds(0);
-  }
+    setIsRunning(false);
+  };
 
-  const minutes = Math.floor(seconds/60);
+  const minutes = Math.floor(seconds / 60);
+  const secs = seconds % 60;
 
   return (
-    <div className="App">
+    <div className="App" style={{ textAlign: 'center', marginTop: '50px' }}>
       <h1>Stopwatch</h1>
-      <p>Time: {minutes >= 10 ? minutes : `0${minutes}`}:{seconds%60 >= 10 ? seconds%60 : `0${seconds%60}`}</p>
-      <button value={button} onClick={handleStartStop}>{button}</button>
-      <button onClick={handleReset}>Reset</button>
+      <p>
+        Time: {minutes.toString().padStart(2, '0')}:
+        {secs.toString().padStart(2, '0')}
+      </p>
+      <button onClick={handleStartStop}>{isRunning ? 'Stop' : 'Start'}</button>
+      <button onClick={handleReset} style={{ marginLeft: '10px' }}>Reset</button>
     </div>
   );
 }
