@@ -29,7 +29,7 @@ function App() {
   return (
     <div className="App" style={{ textAlign: 'center', marginTop: '50px' }}>
       <h1>Stopwatch</h1>
-      <p style={{ fontSize: '2rem' }}>{minutes}:{secs}</p>
+      <p>Time: {minutes}:{secs}</p>
       <button onClick={handleStartStop}>{isRunning ? 'Stop' : 'Start'}</button>
       <button onClick={handleReset} style={{ marginLeft: '10px' }}>Reset</button>
     </div>
