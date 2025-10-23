@@ -12,17 +12,21 @@ function App() {
   const [spell,setSpell] = useState('');
 
   const handleChange = (e) => {
-    setData(e.target.value);
+    const text = e.target.value;
+    setData(text);
 
-    if(data === "" || data.trim() === "") return;
+    const words = text.split(" ");
+    const correctedWords = words.map((word) => {
+      const correctedWord = customDictionary[word.toLowerCase()];
+      return correctedWord || word;
+    });
 
-    const words = (data + ' ').split(' ');
+    const correctedText = correctedWords.join(" ");
 
-    const check = words.find(word => customDictionary[word.toLowerCase()]);
-
-    const correction = check ? customDictionary[check.toLowerCase()] : '';
-
-    setSpell(correction || '');
+    const firstCorrection = correctedWords.find(
+      (word, index) => word !== words[index]
+    );
+    setSpell( firstCorrection || "" );
   }
 
 
