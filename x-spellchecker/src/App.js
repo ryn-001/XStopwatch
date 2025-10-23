@@ -12,7 +12,7 @@ function App() {
   const [spell,setSpell] = useState('');
 
   const handleChange = (e) => {
-    setData(e.target.value);
+    setData(e.target.value + ' ');
 
     if(data === "" || data.trim() === "") return;
 
