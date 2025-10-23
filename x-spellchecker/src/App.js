@@ -12,11 +12,11 @@ function App() {
   const [spell,setSpell] = useState('');
 
   const handleChange = (e) => {
-    setData(e.target.value + ' ');
+    setData(e.target.value);
 
     if(data === "" || data.trim() === "") return;
 
-    const words = data.split(' ');
+    const words = (data + ' ').split(' ');
 
     const check = words.find(word => customDictionary[word.toLowerCase()]);
 
